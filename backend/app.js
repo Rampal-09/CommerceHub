@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 dotenv.config();
 import cookieParser from "cookie-parser";
 import authRoute from "./routes/authRoute.js";
+import categoryRouter from "./routes/categoryRoute.js";
 
 const app = express();
 app.use(
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/categories", categoryRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
