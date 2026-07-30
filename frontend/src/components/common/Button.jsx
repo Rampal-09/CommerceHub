@@ -2,7 +2,7 @@ import React from "react";
 
 const variants = {
   primary:
-    "bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-200 focus:ring-indigo-500",
+    "bg-brand-gradient text-white shadow-brand-glow shadow-brand-glow-hover hover:-translate-y-0.5 active:scale-95 focus:ring-indigo-500",
   secondary:
     "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 focus:ring-slate-400",
   danger:

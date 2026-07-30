@@ -67,14 +67,17 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-xl shadow-indigo-100/60 p-8 sm:p-10">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-100 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Ambient Depth Blobs */}
+      <div className="absolute top-20 -left-20 w-72 h-72 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 -right-20 w-80 h-80 bg-violet-400/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-xl shadow-indigo-100/60 p-8 sm:p-10 relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 border border-indigo-200 rounded-full text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
             🛒 CommerceHub
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-display">
             Welcome Back
           </h1>
           <p className="text-sm text-slate-500 mt-1">
@@ -165,7 +168,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 mt-6 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.99] text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-500/25 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 mt-6 bg-brand-gradient text-white font-semibold text-sm rounded-xl shadow-brand-glow shadow-brand-glow-hover hover:-translate-y-0.5 active:scale-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

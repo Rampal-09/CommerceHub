@@ -1,1 +1,79 @@
+/* ── Google Fonts: Space Grotesk (display) + Inter (body) ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
+
+/* ── Brand Design Tokens ── */
+:root {
+  --brand-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
+  --brand-gradient-hover: linear-gradient(135deg, #4338ca, #6d28d9);
+  --brand-glow: 0 4px 20px -2px rgba(99, 102, 241, 0.45);
+  --brand-glow-hover: 0 8px 30px -2px rgba(124, 58, 237, 0.5);
+}
+
+/* ── Typography ── */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Reusable Brand Gradient Utilities ── */
+.bg-brand-gradient {
+  background: var(--brand-gradient);
+}
+.bg-brand-gradient:hover {
+  background: var(--brand-gradient-hover);
+}
+
+.text-brand-gradient {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-brand-glow {
+  box-shadow: var(--brand-glow);
+}
+
+.shadow-brand-glow-hover:hover {
+  box-shadow: var(--brand-glow-hover);
+}
+
+/* ── Rise-In Stagger Animation ── */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* ── Slide Progress Bar Animation (5-second slider) ── */
+@keyframes slideProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

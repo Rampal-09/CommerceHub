@@ -139,8 +139,22 @@ const productSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+productSchema.virtual("sellingPrice").get(function () {
+  if (
+    this.discountPrice !== undefined &&
+    this.discountPrice !== null &&
+    this.discountPrice > 0 &&
+    this.discountPrice < this.price
+  ) {
+    return this.discountPrice;
+  }
+  return this.price;
+});
 
 const Product = mongoose.model("Product", productSchema);
 

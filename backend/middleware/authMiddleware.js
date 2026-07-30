@@ -32,3 +32,25 @@ export const protect = async (req, res, next) => {
     });
   }
 };
+
+export const roleMiddleware = (...allowedRoles) => {
+  return (req, res, next) => {
+    const roles = allowedRoles.flat();
+
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authorized, user missing.",
+      });
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: `Access denied. Role '${req.user.role}' is not authorized to perform this action.`,
+      });
+    }
+
+    next();
+  };
+};

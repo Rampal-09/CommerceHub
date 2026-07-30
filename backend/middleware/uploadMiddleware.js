@@ -21,6 +21,12 @@ export const upload = multer({
   },
 });
 
+// Middleware for product file fields (thumbnail + images)
+export const uploadProductFiles = upload.fields([
+  { name: "thumbnail", maxCount: 1 },
+  { name: "images", maxCount: 5 },
+]);
+
 // Middleware to handle Multer upload errors cleanly
 export const handleMulterError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
