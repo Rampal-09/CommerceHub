@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CreditCard, ChevronRight, ShoppingBag, ArrowLeft, ShieldCheck } from "lucide-react";
 import { useCheckout } from "../hooks/useCheckout";
+import { useCart } from "../../cart/hooks/useCart";
 import AddressSelector from "../components/AddressSelector";
 import CheckoutItem from "../components/CheckoutItem";
 import OrderSummary from "../components/OrderSummary";
@@ -64,11 +65,21 @@ export const CheckoutPage = () => {
     setOrderNotes,
     applyCoupon,
     placeOrder,
+    fetchCheckout,
   } = useCheckout();
+
+  // Re-fetch checkout data every time the page mounts so we always have fresh cart items
+  useEffect(() => {
+    fetchCheckout(null, true);
+  }, [fetchCheckout]);
+
+  const { refreshCart } = useCart();
 
   const handlePlaceOrderClick = async () => {
     const createdOrder = await placeOrder();
     if (createdOrder) {
+      // Refresh cart context so it reflects the now-empty backend cart
+      await refreshCart();
       // Navigate to Order Success Page with order details
       navigate("/order-success", { state: { order: createdOrder } });
     }
