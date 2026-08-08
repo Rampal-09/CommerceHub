@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Clock, CreditCard, Banknote, ShieldCheck, Tag, FileText } from "lucide-react";
+import { Clock, CreditCard, Banknote, ShieldCheck, Tag, FileText, Rocket, X } from "lucide-react";
 import PriceDetails from "./PriceDetails";
 import PlaceOrderButton from "./PlaceOrderButton";
 
@@ -21,10 +21,19 @@ export const OrderSummary = ({
   isAddressMissing = false,
 }) => {
   const [inputCoupon, setInputCoupon] = useState("");
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
   const handleApplyCoupon = (e) => {
     e.preventDefault();
     onApplyCoupon(inputCoupon);
+  };
+
+  const handlePaymentMethodClick = (id) => {
+    if (id === "Card") {
+      setShowComingSoon(true);
+    } else {
+      onPaymentMethodChange(id);
+    }
   };
 
   const isButtonDisabled = isCartEmpty || isAddressMissing || isPlacingOrder;
@@ -64,7 +73,7 @@ export const OrderSummary = ({
             <button
               key={id}
               type="button"
-              onClick={() => onPaymentMethodChange(id)}
+              onClick={() => handlePaymentMethodClick(id)}
               className={`p-3 rounded-2xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all cursor-pointer ${
                 paymentMethod === id
                   ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-100"
@@ -120,8 +129,65 @@ export const OrderSummary = ({
         disabled={isButtonDisabled}
         isPlacingOrder={isPlacingOrder}
       />
+
+      {/* Coming Soon Modal for Online Payment */}
+      {showComingSoon && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-sm w-full space-y-6 shadow-2xl border border-slate-100 text-center relative overflow-hidden">
+            {/* Decorative background blobs */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-indigo-100/60 rounded-full blur-2xl pointer-events-none"></div>
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-violet-100/60 rounded-full blur-2xl pointer-events-none"></div>
+
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={() => setShowComingSoon(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-700 transition-all cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Icon */}
+            <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+              <div className="absolute inset-0 bg-indigo-100/60 rounded-full animate-pulse"></div>
+              <div className="relative w-20 h-20 bg-gradient-to-br from-indigo-500 to-violet-600 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-200 transform -rotate-3">
+                <Rocket className="w-10 h-10" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="relative space-y-2">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Coming Soon!
+              </h3>
+              <p className="text-sm text-slate-500 leading-relaxed max-w-xs mx-auto">
+                Online payment is currently under development. We're working hard to bring you a seamless payment experience.
+              </p>
+            </div>
+
+            {/* Badge */}
+            <div className="relative inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl text-xs font-bold text-indigo-700">
+              <CreditCard className="w-4 h-4" />
+              <span>Card, UPI, Net Banking & more</span>
+            </div>
+
+            {/* Action Button */}
+            <div className="relative pt-2">
+              <button
+                type="button"
+                onClick={() => setShowComingSoon(false)}
+                className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold text-sm transition-all shadow-md hover:shadow-xl cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Banknote className="w-4 h-4" />
+                <span>Continue with Cash on Delivery</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default OrderSummary;
+
